@@ -1,13 +1,13 @@
 output "name" {
-  value = module.example.sg_name
+  value = module.example.name
 }
 
 output "id" {
-  value = module.example.sg_id
+  value = module.example.id
 
 }
 
 output "rules" {
-  value = module.example.sg_rules
+  value = module.example.rules
 
 }
