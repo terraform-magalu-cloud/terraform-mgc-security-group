@@ -28,7 +28,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_name"></a> [name](#input\_name) | Defines the name of resource | `string` | n/a | yes |
 | <a name="input_create"></a> [create](#input\_create) | Defines whether resource will be created or not | `bool` | `true` | no |
-| <a name="input_description"></a> [description](#input\_description) | value | `string` | `""` | no |
+| <a name="input_description"></a> [description](#input\_description) | Short description about this security group to identify | `string` | `""` | no |
 | <a name="input_rules"></a> [rules](#input\_rules) | Defines rules of security group: map of map | `any` | `{}` | no |
 | <a name="input_validate_quota"></a> [validate\_quota](#input\_validate\_quota) | Check quota before create resource | `bool` | `true` | no |
 | <a name="input_wait"></a> [wait](#input\_wait) | Determine if wait resource will be created | `bool` | `true` | no |
@@ -37,7 +37,11 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_create_at"></a> [create\_at](#output\_create\_at) | n/a |
-| <a name="output_sg_id"></a> [sg\_id](#output\_sg\_id) | n/a |
-| <a name="output_sg_name"></a> [sg\_name](#output\_sg\_name) | n/a |
-| <a name="output_sg_rules"></a> [sg\_rules](#output\_sg\_rules) | n/a |
+| <a name="output_created_at"></a> [created\_at](#output\_created\_at) | Timestamp when this resource was created |
+| <a name="output_id"></a> [id](#output\_id) | ID this resource, is string similar uuid |
+| <a name="output_is_default"></a> [is\_default](#output\_is\_default) | Boolean value say if this SG is default or not |
+| <a name="output_name"></a> [name](#output\_name) | Name of security group, is string |
+| <a name="output_rules"></a> [rules](#output\_rules) | All rules this security group |
+| <a name="output_status"></a> [status](#output\_status) | Status this VPC |
+| <a name="output_updated"></a> [updated](#output\_updated) | Timestamp when this resource was updated |
+| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC that security group is connected |

@@ -1,13 +1,14 @@
 output "name" {
-  value = module.example.sg_name
+  description = "name of sg"
+  value       = module.example.name
 }
 
 output "id" {
-  value = module.example.sg_id
-
+  description = "id of sg"
+  value       = module.example.id
 }
 
 output "rules" {
-  value = module.example.sg_rules
-
+  description = "list rules sg"
+  value       = module.example.rules
 }
