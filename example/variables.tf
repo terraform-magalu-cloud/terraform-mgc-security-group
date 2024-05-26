@@ -1,5 +1,5 @@
 variable "name" {
   description = "name"
-  default     = "xpto"
+  default     = "xpto123"
   type        = string
 }
