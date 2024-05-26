@@ -30,16 +30,8 @@ variable "wait" {
   default     = true
   type        = bool
 }
-
-# variable "wait_timeout" {
-#   description = "value"
-#   default     = 30
-#   type        = number
-# }
-
 variable "description" {
-  description = "value"
+  description = "Short description about this security group to identify"
   default     = ""
   type        = string
-
 }
