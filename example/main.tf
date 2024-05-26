@@ -3,8 +3,8 @@ provider "mgc" {
 }
 
 module "example" {
-  source = "../"
-  name   = var.name
+  source      = "../"
+  name        = var.name
   description = "SG test"
   rules = {
     http = {
