@@ -38,6 +38,7 @@ jobs:
           
   notify-telegram:
     runs-on: ubuntu-latest
+    needs: [release]
     steps:
       - name: Send message to Telegram
         env:
