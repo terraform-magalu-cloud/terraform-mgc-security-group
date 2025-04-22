@@ -1,35 +1,39 @@
 provider "mgc" {
-  region = "br-ne1"
+  api_key = var.api_key
+  region  = "br-ne1"
 }
 
 module "example" {
   source      = "../"
-  name        = var.name
+  name        = "${var.name}-teste"
   description = "SG test"
-  rules = {
-    http = {
-      is_egress   = false
+  rules = [
+    {
+      description = ""
+      egress      = false
       ipv         = 4
       protocol    = "tcp"
       port_min    = 80
       port_max    = 80
-      source_cidr = "192.168.0.0/24"
-    }
-    https = {
-      is_egress   = false
+      cidr        = "192.168.0.0/24"
+    },
+    {
+      description = ""
+      egress      = false
       ipv         = 4
       protocol    = "tcp"
       port_min    = 443
       port_max    = 443
-      source_cidr = "10.10.0.0/24"
-    }
-    altport = {
-      is_egress   = true
+      cidr        = "10.10.0.0/24"
+    },
+    {
+      description = ""
+      egress      = true
       ipv         = 4
       protocol    = "tcp"
       port_min    = 1025
       port_max    = 65535
-      source_cidr = "10.10.0.0/24"
+      cidr        = "10.10.0.0/24"
     }
-  }
+  ]
 }
