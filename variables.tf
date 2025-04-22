@@ -15,20 +15,15 @@ variable "name" {
 
 variable "rules" {
   description = "Defines rules of security group: map of map"
-  type        = any
-  default     = {}
-}
-
-variable "validate_quota" {
-  description = "Check quota before create resource"
-  default     = true
-  type        = bool
-}
-
-variable "wait" {
-  description = "Determine if wait resource will be created"
-  default     = true
-  type        = bool
+  type = list(object({
+    description = string
+    egress      = bool
+    ipv         = number
+    port_min    = number
+    port_max    = number
+    protocol    = string
+    cidr        = string
+  }))
 }
 variable "description" {
   description = "Short description about this security group to identify"
