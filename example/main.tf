@@ -4,11 +4,11 @@ provider "mgc" {
 }
 
 resource "random_string" "sufix" {
-  length = 12
-  special = false
-  min_lower = 3
-  min_upper = 3
-  min_numeric = 3
+  length      = 12
+  special     = false
+  min_lower   = 4
+  min_upper   = 4
+  min_numeric = 4
 }
 
 module "example" {
