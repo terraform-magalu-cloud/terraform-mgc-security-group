@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.1.0...v1.2.0) (2025-09-27)
+
+
+### Features
+
+* upgrade version and improv example ([c8bcee5](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/c8bcee5f48fe345d8da93fd385fa73747c9b8e0d))
+
+
+### Bug Fixes
+
+* ajuste nos valores dos parâmetros ([ad81ae6](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/ad81ae67df2f7323d403ea201cc0414b9a5858f1))
+* job variable ([7a15c52](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/7a15c5268dfa95852ee5af43c86c47d369667a36))
+* version random ([86a5548](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/86a55488890a1fb775fb0ba28720ae0fb21a4b31))
+
 ## [1.1.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.0.0...v1.1.0) (2025-04-22)
 
 
