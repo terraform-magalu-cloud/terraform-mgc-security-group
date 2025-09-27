@@ -3,13 +3,21 @@ provider "mgc" {
   region  = "br-ne1"
 }
 
+resource "random_string" "sufix" {
+  length      = 12
+  special     = false
+  min_lower   = 4
+  min_upper   = 4
+  min_numeric = 4
+}
+
 module "example" {
   source      = "../"
-  name        = "${var.name}-teste"
+  name        = "${var.name}-teste-${random_string.sufix.result}"
   description = "SG test"
   rules = [
     {
-      description = ""
+      description = "Acesso ao serviço http"
       egress      = false
       ipv         = 4
       protocol    = "tcp"
@@ -18,7 +26,7 @@ module "example" {
       cidr        = "192.168.0.0/24"
     },
     {
-      description = ""
+      description = "Acesso ao serviço https"
       egress      = false
       ipv         = 4
       protocol    = "tcp"
@@ -27,7 +35,7 @@ module "example" {
       cidr        = "10.10.0.0/24"
     },
     {
-      description = ""
+      description = "Liberado a qualquer serviço da rede internta porta alta"
       egress      = true
       ipv         = 4
       protocol    = "tcp"
