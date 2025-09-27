@@ -69,13 +69,3 @@ jobs:
           EOF
 
           python sendMsg.py
-          # curl -s -X POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage \
-          #   -d chat_id=$TELEGRAM_CHAT_ID \
-          #   -d text="🚀 Nova release publicada: *${RELEASE_NAME}* \n\n🔖 Tag: \`${RELEASE_TAG}\`\n📦 Veja em: $RELEASE_URL" \
-          #   -d parse_mode=Markdown -d message_thread_id=$TELEGRAM_TOPIC_GENREAL
-
-          # curl -s -X POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage \
-          #   -d chat_id=$TELEGRAM_CHAT_ID \
-          #   -d text="🚀 Nova release publicada: *${RELEASE_NAME}* \n\n🔖 Tag: \`${RELEASE_TAG}\`\n📦 Veja em: $RELEASE_URL" \
-          #   -d parse_mode=Markdown -d message_thread_id=$TELEGRAM_TOPIC_NEWS
-          # fi
