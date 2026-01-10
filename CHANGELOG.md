@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.2.0...v1.3.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* **outputs:** corrige o output `rules` para retornar a lista de regras criadas em vez de um valor vazio.
+* **release:** corrige a ordenação das chaves no `.releaserc.json` para satisfazer o hook `pretty-format-json`.
+
+### Code Refactoring
+
+* **validation:** move a lógica de validação de `main.tf` para blocos `validation` nativos em `variables.tf`.
+* **validation:** adiciona validação de comprimento para o nome do security group (mínimo 5 caracteres).
+* **validation:** adiciona validação estrita para `ipv` (4 ou 6) e `protocol` (tcp, udp, icmp).
+
+### Documentation
+
+* **descriptions:** melhora as descrições das variáveis e outputs para maior clareza e profissionalismo.
+
+### Upgrade
+
+* **provider:** Upgrade provider mgc version 0.37.0 to 0.41.1.
+
+
+
 ## [1.2.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.1.0...v1.2.0) (2025-09-27)
 
 
