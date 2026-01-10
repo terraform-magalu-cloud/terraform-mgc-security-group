@@ -2,25 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.2.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.1.0...v1.2.0) (2025-09-27)
+
+
+### Features
+
+* upgrade version and improv example ([c8bcee5](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/c8bcee5f48fe345d8da93fd385fa73747c9b8e0d))
+
 
 ### Bug Fixes
 
-* **outputs:** corrige o output `rules` para retornar a lista de regras criadas em vez de um valor vazio.
-* **release:** corrige a ordenação das chaves no `.releaserc.json` para satisfazer o hook `pretty-format-json`.
+* ajuste nos valores dos parâmetros ([ad81ae6](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/ad81ae67df2f7323d403ea201cc0414b9a5858f1))
+* job variable ([7a15c52](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/7a15c5268dfa95852ee5af43c86c47d369667a36))
+* version random ([86a5548](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/86a55488890a1fb775fb0ba28720ae0fb21a4b31))
 
-### Code Refactoring
+## [1.1.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.0.0...v1.1.0) (2025-04-22)
 
-* **validation:** move a lógica de validação de `main.tf` para blocos `validation` nativos em `variables.tf`.
-* **validation:** adiciona validação de comprimento para o nome do security group (mínimo 5 caracteres).
-* **validation:** adiciona validação estrita para `ipv` (4 ou 6) e `protocol` (tcp, udp, icmp).
 
-### Documentation
+### Features
 
-* **descriptions:** melhora as descrições das variáveis e outputs para maior clareza e profissionalismo.
-## [upgrade]
+* add env ([4ba6d6d](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/4ba6d6d7f1ead52ba28a9ce9547412bbfcfc7cd4))
+* add telegram notify ([d548aec](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/d548aec8de2eccf52372b5c74faa3e0e589ca88c))
+* improvment actions to publish in telegram ([1ec55e2](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/1ec55e207253d6c5e889f58aa949245b1b8a56ff))
+* re-enable validate PR ([16939ca](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/16939ca13f86d67412958e07edbaf98df4e31301))
+* update docs this modules+ ([55e7f5a](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/55e7f5a27665347b4fcbfdab9db2618e2c9142c0))
+* upgrade version pre-commit ([85db982](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/85db9821bb156ac723c6040def900674b7a0be71))
+* upgrade version terraform mgc ([2aedb3a](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/2aedb3a46b5ce7bcd38c25799ad10de5864907d4))
 
-* upgrade provider mgc from 0.37.0 to 0.41.1
+
+### Bug Fixes
+
+* add improv like tike type ([e093da7](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/e093da78922aba124242fd5594bfa388a3dd92b1))
+* fix problem that recreate alway rules the security group ([3ee7a47](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/3ee7a47be707df9ccb3488b5aecff9c30c76f6dc))
 
 ## 1.0.0 (2024-05-26)
 
