@@ -1,11 +1,28 @@
+# .pre-commit-config.yaml
 repos:
+  # Repositório para hooks genéricos do pre-commit
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: pretty-format-json
+
+  # Repositório para hooks específicos de Terraform
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev:  v1.99.0
+    rev: v1.96.1
     hooks:
       - id: terraform_fmt
       - id: terraform_docs
         args:
           - '--args=--lockfile=false'
+          - --args=--config=.terraform-docs.yml
+          - --args=--output-mode=replace
       - id: terraform_tflint
         args:
           - '--args=--only=terraform_deprecated_interpolation'
@@ -23,3 +40,11 @@ repos:
           - '--args=--only=terraform_workspace_remote'
           - '--args=--only=terraform_unused_required_providers'
       - id: terraform_validate
+      #- id: terraform_checkov # Adicionando o hook do Checkov para análise de segurança
+        #args:
+          # Argumentos opcionais para Checkov:
+          # - '--args=--framework terraform' # Especifica o framework (já é o padrão para este hook)
+          # - '--args=--output cli' # Formato de saída (pode ser "json", "sarif", etc.)
+          # - '--args=--skip-check CKV_AWS_1,CKV_AWS_2' # Pula verificações específicas
+          # - '--args=--external-checks path/to/custom_checks' # Adiciona verificações customizadas
+          # - '--args=--config-file .checkov.yml' # Usa um arquivo de configuração do Checkov

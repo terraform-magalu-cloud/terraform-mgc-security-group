@@ -1,11 +1,11 @@
 variable "name" {
-  description = "name"
+  description = "The name prefix for the security group resources."
   default     = "example"
   type        = string
 }
 
 variable "api_key" {
-  description = "API Keys are used for authentication with the Magalu Cloud API when using the Terraform provider"
+  description = "The API Key for authentication with the Magalu Cloud API."
   type        = string
   sensitive   = true
 }
