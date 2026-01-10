@@ -38,3 +38,4 @@ override.tf.json
 terraform.rc
 temelgram.py
 *.py
+policy
