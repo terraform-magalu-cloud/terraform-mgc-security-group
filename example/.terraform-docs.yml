@@ -1,6 +1,6 @@
 formatter: "markdown table" # this is required
-header-from: "docs/.header.md"
-footer-from: "docs/.footer.md"
+header-from: "../docs/.header.md"
+footer-from: "../docs/.footer.md"
 output:
   file: "README.md"
   mode: replace
