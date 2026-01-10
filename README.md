@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_mgc"></a> [mgc](#provider\_mgc) | 0.33.0 |
+| <a name="provider_mgc"></a> [mgc](#provider\_mgc) | 0.41.1 |
 
 ## Modules
 
