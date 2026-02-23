@@ -3,14 +3,14 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.11.1 |
-| <a name="requirement_mgc"></a> [mgc](#requirement\_mgc) | ~> 0.41.1 |
+| <a name="requirement_mgc"></a> [mgc](#requirement\_mgc) | ~> 0.44.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.7.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_mgc"></a> [mgc](#provider\_mgc) | 0.41.1 |
+| <a name="provider_mgc"></a> [mgc](#provider\_mgc) | 0.44.2 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
 
 ## Modules
