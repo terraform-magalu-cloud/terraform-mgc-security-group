@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.3.0...v1.4.0) (2026-02-23)
+
+
+### Features
+
+* define provider requirements and terraform version and upgrade ([f2b2fbe](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/f2b2fbef9c0bb6a4ee1458a009884de51e54a59b))
+
 ## [1.4.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.3.0...v1.4.0) (2026-02-22)
 
 ### Features
