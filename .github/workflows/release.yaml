@@ -28,6 +28,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install semantic-release dependencies
+        run: npm install conventional-changelog-conventionalcommits
+
       - name: Instalar semantic-release
         run: |
           npm install -g semantic-release \
