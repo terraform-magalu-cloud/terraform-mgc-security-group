@@ -52,7 +52,7 @@ jobs:
               f"*Repositório:* `{escape_markdown(REPO)}`\n"
               f"*Versão:* `{escape_markdown(TAG)}`\n\n"
               f"🔗 [Ver no GitHub]({URL})\n\n"
-              f"📜 *Changelog:*\n{body_escaped}"
+              f"📜 *Changelog:*\n{BODY}"
           )
 
           telegram_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
