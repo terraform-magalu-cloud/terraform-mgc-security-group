@@ -12,58 +12,62 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Passando as variáveis que o Python vai usar
+          REPOSITORY: ${{ github.repository }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_URL: ${{ github.event.release.html_url }}
-          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+          # Caso use tópicos no Telegram, senão pode deixar vazio
+          THREAD_ID: ${{ env.THREAD_ID }}
         run: |
-          if [ -z $RELEASE_TAG ]; then
-          cat << EOF > sendMsg.py
-          import os
-          import requests
+          # Instalando dependência caso não exista (geralmente já vem no runner)
+          python3 -m pip install requests
 
-          # Variáveis de ambiente
+          cat << 'EOF' > sendMsg.py
+          import requests
+          import re
+          import os
+
+          def escape_markdown(text):
+              if not text: return ""
+              # Caracteres que o MarkdownV2 do Telegram exige escape
+              escape_chars = r'_*[]()~`>#+-=|{}.!'
+              return re.sub(f'([{re.escape(escape_chars)}])', r'\\\1', text)
+
+          # Coleta dados das variáveis de ambiente do GitHub
           BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
           CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
-          REPO = os.getenv("REPOSITORY")  # Formato: usuario/repositorio
+          REPO = os.getenv("REPOSITORY")
+          TAG = os.getenv("RELEASE_TAG")
+          URL = os.getenv("RELEASE_URL")
+          BODY = os.getenv("RELEASE_BODY", "Sem changelog.")
+          THREAD_ID = os.getenv("THREAD_ID")
 
-          if not BOT_TOKEN or not CHAT_ID or not REPO:
-              raise ValueError("As variáveis TELEGRAM_TOKEN, TELEGRAM_CHAT_ID e GITHUB_REPOSITORY precisam estar definidas.")
+          # Formatação da mensagem
+          body_escaped = escape_markdown(BODY[:1000]) # Limite de caracteres
+          
+          message = (
+              f"🚀 *Nova Release Disponível*\n"
+              f"*Repositório:* `{escape_markdown(REPO)}`\n"
+              f"*Versão:* `{escape_markdown(TAG)}`\n\n"
+              f"🔗 [Ver no GitHub]({URL})\n\n"
+              f"📜 *Changelog:*\n{body_escaped}"
+          )
 
-          # Pega a última release via GitHub API
-          gh_api_url = f"https://api.github.com/repos/{REPO}/releases/latest"
-          gh_response = requests.get(gh_api_url)
-
-          if gh_response.status_code != 200:
-              raise Exception(f"Erro ao buscar release do GitHub: {gh_response.status_code}")
-
-          release = gh_response.json()
-          tag = release["tag_name"]
-          name = release["name"]
-          description = release.get("body", "(sem descrição)")
-          html_url = release["html_url"]
-
-          # Mensagem estilizada
-          MESSAGE = f"""🎉 *Nova Release Publicada!*
-
-          🏷️ *{name}* (`{tag}`)
-
-          📝 {description}
-
-          🔗 [Ver no GitHub]({html_url})
-          """
-
-          # Envia para o Telegram
-          url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+          telegram_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
           payload = {
               "chat_id": CHAT_ID,
-              "text": MESSAGE,
-              "parse_mode": "Markdown",
-              "disable_web_page_preview": False,
+              "text": message,
+              "parse_mode": "MarkdownV2",
           }
+          if THREAD_ID:
+              payload["message_thread_id"] = THREAD_ID
 
-          response = requests.post(url, data=payload)
-          print("Status:", response.status_code)
-          print("Resposta:", response.json())
+          resp = requests.post(telegram_url, json=payload)
+          if resp.status_code == 200:
+              print("Mensagem enviada com sucesso!")
+          else:
+              print(f"Erro: {resp.status_code} - {resp.text}")
           EOF
 
-          python sendMsg.py
+          python3 sendMsg.py
