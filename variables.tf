@@ -24,14 +24,14 @@ variable "description" {
 
 variable "rules" {
   description = "Lista de objetos representando as regras de segurança. Campos egress, ipv e protocol possuem valores padrão."
-  
+
   type = list(object({
     description = string
-    egress      = optional(bool, false)     # Default para Ingress
-    ipv         = optional(number, 4)       # Default para IPv4
+    egress      = optional(bool, false) # Default para Ingress
+    ipv         = optional(number, 4)   # Default para IPv4
     port_min    = number
     port_max    = number
-    protocol    = optional(string, "tcp")   # Default para TCP
+    protocol    = optional(string, "tcp") # Default para TCP
     cidr        = string
   }))
   default = []

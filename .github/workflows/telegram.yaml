@@ -45,7 +45,7 @@ jobs:
 
           # Formatação da mensagem
           body_escaped = escape_markdown(BODY[:1000]) # Limite de caracteres
-          
+
           message = (
               f"🚀 *Nova Release Disponível*\n"
               f"*Repositório:* `{escape_markdown(REPO)}`\n"
