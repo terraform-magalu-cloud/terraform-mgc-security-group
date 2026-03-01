@@ -1,3 +1,15 @@
+## [2.0.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.4.0...v2.0.0) (2026-03-01)
+
+### ⚠ BREAKING CHANGES
+
+* refactor rules to for_each and enhance input validations
+* The resource `mgc_network_security_groups_rules.this` now uses `for_each`. Existing rules in the state will be recreated unless moved manually. Minimum Terraform version is now 1.11.1.
+
+### Features
+
+* refactor rules to for_each and enhance input validations ([e1e583f](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/e1e583fb41bf313a52c337ffd43f5ccaaf65bb2a))
+* upgrade requirements and refactor rules to for_each ([7d08f1c](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/commit/7d08f1c60360e1678c3902a6005eb5ef06100ef2))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
