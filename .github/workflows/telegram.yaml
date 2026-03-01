@@ -1,9 +1,13 @@
-name: Telegram - Notify on Release
+name: Notify Telegram on Release
 
 on:
-  workflow_dispatch:
   release:
     types: [published]
+  workflow_dispatch:
+
+# Definindo a variável no contexto de ambiente do workflow
+env:
+  THREAD_ID: ${{ secrets.TELEGRAM_THREAD_ID }} # Ou um ID fixo como "123"
 
 jobs:
   notify-telegram:
@@ -13,15 +17,11 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          # Passando as variáveis que o Python vai usar
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_URL: ${{ github.event.release.html_url }}
-          RELEASE_BODY: ${{ github.event.release.body }}
-          # Caso use tópicos no Telegram, senão pode deixar vazio
-          THREAD_ID: ${{ env.THREAD_ID }}
+          # Usando a sintaxe que você solicitou
+          THREAD_ID: ${{ env.THREAD_ID }} 
         run: |
-          # Instalando dependência caso não exista (geralmente já vem no runner)
           python3 -m pip install requests
 
           cat << 'EOF' > sendMsg.py
@@ -31,44 +31,61 @@ jobs:
 
           def escape_markdown(text):
               if not text: return ""
-              # Caracteres que o MarkdownV2 do Telegram exige escape
               escape_chars = r'_*[]()~`>#+-=|{}.!'
               return re.sub(f'([{re.escape(escape_chars)}])', r'\\\1', text)
 
-          # Coleta dados das variáveis de ambiente do GitHub
+          # Variáveis de ambiente
           BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
           CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
           REPO = os.getenv("REPOSITORY")
-          TAG = os.getenv("RELEASE_TAG")
-          URL = os.getenv("RELEASE_URL")
-          BODY = os.getenv("RELEASE_BODY", "Sem changelog.")
-          THREAD_ID = os.getenv("THREAD_ID")
+          GH_TOKEN = os.getenv("GITHUB_TOKEN")
+          # Captura o THREAD_ID do env do shell
+          THREAD_ID_ENV = os.getenv("THREAD_ID")
 
-          # Formatação da mensagem
-          body_escaped = escape_markdown(BODY[:1000]) # Limite de caracteres
+          gh_url = f"https://api.github.com/repos/{REPO}/releases/latest"
+          headers = {"Authorization": f"Bearer {GH_TOKEN}"}
+          
+          try:
+              response = requests.get(gh_url, headers=headers)
+              response.raise_for_status()
+              release = response.json()
+              
+              tag = release.get("tag_name", "v?")
+              url = release.get("html_url", "")
+              body = release.get("body", "Nenhuma nota de release.")
+              
+              body_escaped = escape_markdown(body[:1500] + ("..." if len(body) > 1500 else ""))
 
-          message = (
-              f"🚀 *Nova Release Disponível*\n"
-              f"*Repositório:* `{escape_markdown(REPO)}`\n"
-              f"*Versão:* `{escape_markdown(TAG)}`\n\n"
-              f"🔗 [Ver no GitHub]({URL})\n\n"
-              f"📜 *Changelog:*\n{BODY}"
-          )
+              message = (
+                  f"📦 *Nova Release:* `{escape_markdown(tag)}`\n"
+                  f"📁 *Repo:* `{escape_markdown(REPO)}`\n\n"
+                  f"📝 *Release Notes:*\n"
+                  f"{body_escaped}\n\n"
+                  f"🔗 [Visualizar no GitHub]({url})"
+              )
 
-          telegram_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-          payload = {
-              "chat_id": CHAT_ID,
-              "text": message,
-              "parse_mode": "MarkdownV2",
-          }
-          if THREAD_ID:
-              payload["message_thread_id"] = THREAD_ID
+              telegram_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+              payload = {
+                  "chat_id": CHAT_ID,
+                  "text": message,
+                  "parse_mode": "MarkdownV2"
+              }
 
-          resp = requests.post(telegram_url, json=payload)
-          if resp.status_code == 200:
-              print("Mensagem enviada com sucesso!")
-          else:
-              print(f"Erro: {resp.status_code} - {resp.text}")
+              # Validação do Thread ID (deve ser int para o Telegram)
+              if THREAD_ID_ENV and THREAD_ID_ENV.strip():
+                  try:
+                      payload["message_thread_id"] = int(THREAD_ID_ENV)
+                  except ValueError:
+                      print(f"Aviso: THREAD_ID '{THREAD_ID_ENV}' inválido. Enviando para o chat principal.")
+
+              res = requests.post(telegram_url, json=payload)
+              if res.status_code == 200:
+                  print(f"Notificação enviada com sucesso para a tag {tag}")
+              else:
+                  print(f"Erro no Telegram: {res.text}")
+
+          except Exception as e:
+              print(f"Falha crítica: {e}")
           EOF
 
           python3 sendMsg.py
