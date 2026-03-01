@@ -18,7 +18,7 @@ jobs:
           RELEASE_URL: ${{ github.event.release.html_url }}
           RELEASE_BODY: ${{ github.event.release.body }}
           # Caso use tópicos no Telegram, senão pode deixar vazio
-          THREAD_ID: "0" 
+          THREAD_ID: ${{ env.THREAD_ID }}
         run: |
           # Instalando dependência caso não exista (geralmente já vem no runner)
           python3 -m pip install requests
