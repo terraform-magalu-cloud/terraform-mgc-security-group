@@ -26,6 +26,33 @@ module "example" {
       cidr        = "0.0.0.0/0"
     },
     {
+      description = "Acesso ao serviço http"
+      egress      = false
+      ipv         = 4
+      protocol    = "tcp"
+      port_min    = 8080
+      port_max    = 8080
+      cidr        = "0.0.0.0/0"
+    },
+    {
+      description = "Acesso ao serviço http"
+      egress      = false
+      ipv         = 4
+      protocol    = "tcp"
+      port_min    = 8081
+      port_max    = 8081
+      cidr        = "0.0.0.0/0"
+    },
+    {
+      description = "Acesso ao serviço http"
+      egress      = false
+      ipv         = 4
+      protocol    = "tcp"
+      port_min    = 9090
+      port_max    = 9090
+      cidr        = "0.0.0.0/0"
+    },
+    {
       description = "Acesso ao serviço https"
       egress      = false
       ipv         = 4

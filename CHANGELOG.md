@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+All notable changes to this project will be documented in this file.
+
+## [2.0.0] - 2026-03-01
+
+### Breaking Changes
+
+* **state:** Refatoração do recurso `mgc_network_security_groups_rules` para utilizar `for_each`. Isso altera o endereço dos recursos no state e causará a recriação de regras existentes.
+* **requirements:** Elevada a versão mínima do Terraform para `1.11.1` e do provedor MGC para `0.45.0`.
+* **validation:** A variável `name` agora exige um comprimento mínimo de 5 caracteres.
+
+### Features
+
+* **validation:** Adicionada validação robusta para regras de segurança, incluindo versão de IP (4 ou 6), protocolos permitidos (tcp, udp, icmp, all), consistência de intervalos de portas e formato CIDR.
+* **integrity:** Adicionado bloco `terraform_data` com `precondition` para evitar a inserção de regras duplicadas na lista de entrada.
+* **dx:** Melhoria nas mensagens de erro de validação para facilitar o debug pelo usuário do módulo.
+
+### Maintenance
+
+* **ci:** Atualização dos hooks de `pre-commit` e inclusão de regras estritas de `tflint`.
+* **docs:** Atualização do README com os novos requisitos e tipos de dados.
+
+
 ## [1.4.0](https://github.com/terraform-magalu-cloud/terraform-mgc-security-group/compare/v1.3.0...v1.4.0) (2026-02-23)
 
 
