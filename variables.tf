@@ -23,39 +23,48 @@ variable "description" {
 }
 
 variable "rules" {
-  description = <<-EOT
-    A list of objects representing the security group rules to be created.
-    Each object in the list must contain the following attributes:
-    - description: (string) A description for the rule.
-    - egress:      (bool) Set to 'true' for an egress rule, 'false' for ingress.
-    - ipv:         (number) The IP version, either 4 or 6.
-    - port_min:    (number) The minimum port number for the rule.
-    - port_max:    (number) The maximum port number for the rule.
-    - protocol:    (string) The protocol (e.g., 'tcp', 'udp', 'icmp').
-    - cidr:        (string) The remote IP CIDR block.
-  EOT
+  description = "Lista de objetos representando as regras de segurança. Campos egress, ipv e protocol possuem valores padrão."
+  
   type = list(object({
     description = string
-    egress      = bool
-    ipv         = number
+    egress      = optional(bool, false)     # Default para Ingress
+    ipv         = optional(number, 4)       # Default para IPv4
     port_min    = number
     port_max    = number
-    protocol    = string
+    protocol    = optional(string, "tcp")   # Default para TCP
     cidr        = string
   }))
-  default = [] # É uma boa prática fornecer um default vazio para listas.
+  default = []
 
+  # 1. Validação de Versão de IP
   validation {
     condition = alltrue([
       for r in var.rules : contains([4, 6], r.ipv)
     ])
-    error_message = "The 'ipv' attribute must be either 4 or 6."
+    error_message = "O atributo 'ipv' deve ser obrigatoriamente 4 ou 6."
   }
 
+  # 2. Validação de Protocolo (Case Insensitive)
   validation {
     condition = alltrue([
-      for r in var.rules : contains(["tcp", "udp", "icmp"], r.protocol)
+      for r in var.rules : contains(["tcp", "udp", "icmp", "all"], lower(r.protocol))
     ])
-    error_message = "The 'protocol' attribute must be 'tcp', 'udp', or 'icmp'."
+    error_message = "O protocolo deve ser 'tcp', 'udp', 'icmp' ou 'all'."
+  }
+
+  # 3. Validação de Consistência de Portas
+  validation {
+    condition = alltrue([
+      for r in var.rules : r.port_min <= r.port_max && r.port_min >= 0 && r.port_max <= 65535
+    ])
+    error_message = "Porta mínima não pode ser maior que a máxima e devem estar no intervalo 0-65535."
+  }
+
+  # 4. Validação Básica de Formato CIDR (Opcional, mas recomendado)
+  validation {
+    condition = alltrue([
+      for r in var.rules : can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$|^([a-fA-F0-9:]+)/[0-9]{1,3}$", r.cidr))
+    ])
+    error_message = "O campo 'cidr' deve estar em um formato válido (ex: 0.0.0.0/0 ou 2001:db8::/32)."
   }
 }

@@ -4,15 +4,33 @@ resource "mgc_network_security_groups" "this" {
   description = var.description
 }
 
+resource "terraform_data" "validate_rules" {
+  lifecycle {
+    precondition {
+      condition     = length(var.rules) == length(distinct(var.rules))
+      error_message = "Erro: Foram encontradas regras de segurança idênticas na variável 'rules'. Por favor, remova as duplicatas."
+    }
+  }
+}
 resource "mgc_network_security_groups_rules" "this" {
-  count             = var.create ? length(var.rules) : 0
+  # Criamos um mapa com chaves únicas para o for_each
+  for_each = var.create ? { 
+    for index, r in var.rules : "Egress-${r.egress}-${"ipv${r.ipv}"}-${r.port_min}-${r.port_max}-${replace(replace(r.cidr, ".", "-"),"/", "-")}" => r 
+    if r.egress != null 
+  } : {}
+
   depends_on        = [mgc_network_security_groups.this]
-  description       = var.rules[count.index].description
+  
+  description       = each.value.description
   security_group_id = mgc_network_security_groups.this[0].id
-  direction         = var.rules[count.index].egress == false ? "ingress" : "egress"
-  ethertype         = "IPv${var.rules[count.index].ipv}"
-  remote_ip_prefix  = var.rules[count.index].cidr
-  protocol          = var.rules[count.index].protocol
-  port_range_min    = var.rules[count.index].port_min
-  port_range_max    = var.rules[count.index].port_max
+  
+  direction         = each.value.egress == false ? "ingress" : "egress"
+  ethertype         = "IPv${each.value.ipv}"
+  remote_ip_prefix  = each.value.cidr
+  protocol          = each.value.protocol
+  
+  # Usando tonumber() em vez de int()
+  port_range_min    = tonumber(each.value.port_min)
+  port_range_max    = tonumber(each.value.port_max)
+  
 }
