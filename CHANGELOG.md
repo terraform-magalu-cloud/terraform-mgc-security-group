@@ -16,6 +16,17 @@ All notable changes to this project will be documented in this file.
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2026-05-20
+
+📦 Novidades da Release
+
+• Atualização do provider magalucloud/mgc para a versão 0\.50\.0
+• Atualização dos hashes nos arquivos terraform\.lock\.hcl
+• Atualização da versão do provider nas tabelas dos arquivos README\.md
+• Inclusão de regra no Makefile para limpar os arquivos de lock antigos
+• Remoção de espaços em branco não utilizados no workflow telegram\.yaml
+
+
 ## [2.0.0] - 2026-03-01
 
 ### Breaking Changes
