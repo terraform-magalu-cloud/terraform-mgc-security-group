@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_mgc"></a> [mgc](#provider\_mgc) | 0.45.0 |
+| <a name="provider_mgc"></a> [mgc](#provider\_mgc) | 0.50.0 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules

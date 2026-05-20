@@ -41,6 +41,8 @@ clean:
 	find . -type f -name ".terraform.lock.hcl" -delete
 	find . -type f -name "*.tfstate" -delete
 	find . -type f -name "*.tfstate.backup" -delete
+	find . -type f -name "*.terraform.lock.hcl" -delete
+
 
 pre-commit:
 	@echo "Executando pre-commit hooks..."

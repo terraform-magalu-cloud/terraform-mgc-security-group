@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
           # Usando a sintaxe que você solicitou
-          THREAD_ID: ${{ env.THREAD_ID }} 
+          THREAD_ID: ${{ env.THREAD_ID }}
         run: |
           python3 -m pip install requests
 
@@ -44,16 +44,16 @@ jobs:
 
           gh_url = f"https://api.github.com/repos/{REPO}/releases/latest"
           headers = {"Authorization": f"Bearer {GH_TOKEN}"}
-          
+
           try:
               response = requests.get(gh_url, headers=headers)
               response.raise_for_status()
               release = response.json()
-              
+
               tag = release.get("tag_name", "v?")
               url = release.get("html_url", "")
               body = release.get("body", "Nenhuma nota de release.")
-              
+
               body_escaped = escape_markdown(body[:1500] + ("..." if len(body) > 1500 else ""))
 
               message = (
